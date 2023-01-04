@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Execute Upload",
+				"name": "Execute_Upload",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
@@ -16,7 +16,7 @@
 				}
 			},
 			{
-				"name": "Execute Download",
+				"name": "Execute_Download",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
