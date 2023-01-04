@@ -16,7 +16,7 @@
 				}
 			},
 			{
-				"name": "Execute_Download",
+				"name": "Execute_Downloads",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
