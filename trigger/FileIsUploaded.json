@@ -1,0 +1,18 @@
+{
+	"name": "FileIsUploaded",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/shirtestblob/blobs/input",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/4ddbafca-30ce-430a-b787-e9c173519c86/resourceGroups/shirtest/providers/Microsoft.Storage/storageAccounts/shirteststorageacc",
+			"events": [
+				"Microsoft.Storage.BlobCreated",
+				"Microsoft.Storage.BlobDeleted"
+			]
+		}
+	}
+}

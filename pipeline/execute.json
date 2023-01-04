@@ -1,0 +1,61 @@
+{
+	"name": "execute",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Upload",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "upload",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute Download",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Start ACI",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "download",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Start ACI",
+				"type": "WebHook",
+				"dependsOn": [
+					{
+						"activity": "Execute Upload",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-144.westeurope.logic.azure.com:443/workflows/deabb65d59654b0ba688488a8aedd858",
+					"method": "POST",
+					"timeout": "00:10:00"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2022-12-27T13:17:04Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
