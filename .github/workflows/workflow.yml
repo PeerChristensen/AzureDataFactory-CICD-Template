@@ -1,4 +1,4 @@
-name: deploy-toy-website
+name: deploy-adf
 
 on: [workflow_dispatch]
 
@@ -19,7 +19,7 @@ jobs:
     - name: Deploy resources
       uses: Azure/data-factory-deploy-action@v1.2.0
       with:
-        resourceGroupName: shirtest
+        resourceGroupName: adf-iac
         dataFactoryName: shirtest-df-prod
         armTemplateFile: shirtest-df\ARMTemplateForFactory.json
         armTemplateParametersFile: shirtest-df\ARMTemplateParametersForFactory.json
