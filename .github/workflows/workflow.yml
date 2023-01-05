@@ -24,7 +24,7 @@ jobs:
       with:
         resourceGroupName: adf-iac
         dataFactoryName: adf-iac-dev
-        armTemplateFile: adf-iac-dev\ARMTemplateForFactory.json
+        armTemplateFile: \ARMTemplateForFactory.json
         armTemplateParametersFile: adf-iac-dev\ARMTemplateParametersForFactory.json
       # additionalParameters: 'key1=value key2=value keyN=value' [optional]
       # skipAzModuleInstallation: true [optional]
