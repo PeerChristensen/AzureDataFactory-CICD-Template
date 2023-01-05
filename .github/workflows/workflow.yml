@@ -15,8 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-      with:
-        path: main
     - name: Login via Az module
       uses: azure/login@v1
       with:
@@ -28,7 +26,5 @@ jobs:
       with:
         resourceGroupName: adf-iac
         dataFactoryName: adf-iac-dev
-        armTemplateFile: adf-iac-dev/ARMTemplateForFactory.json
+        armTemplateFile: adf-iac-dev\ARMTemplateForFactory.json
         armTemplateParametersFile: adf-iac-dev\ARMTemplateParametersForFactory.json
-      # additionalParameters: 'key1=value key2=value keyN=value' [optional]
-      # skipAzModuleInstallation: true [optional]
