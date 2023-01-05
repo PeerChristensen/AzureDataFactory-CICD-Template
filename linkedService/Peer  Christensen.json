@@ -8,10 +8,6 @@
 			"host": "\\\\PC10034\\Users\\peer\\Desktop",
 			"userId": "peer@seges.dk",
 			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0Y2RhOWJjNC1lMjI3LTQwNTctOTI1OC0zOTBhNzkzMTBiMDAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
-		},
-		"connectVia": {
-			"referenceName": "shirtest-peer",
-			"type": "IntegrationRuntimeReference"
 		}
 	}
 }
