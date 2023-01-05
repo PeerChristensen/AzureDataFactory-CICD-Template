@@ -4,18 +4,6 @@
 	"parameters": {
 		"factoryName": {
 			"value": "adf-iac-dev"
-		},
-		"AzureBlobStorage1_connectionString": {
-			"value": ""
-		},
-		"Peer  Christensen_password": {
-			"value": ""
-		},
-		"Peer  Christensen_properties_typeProperties_host": {
-			"value": "\\\\PC10034\\Users\\peer\\Desktop"
-		},
-		"Peer  Christensen_properties_typeProperties_userId": {
-			"value": "peer@seges.dk"
 		}
 	}
 }

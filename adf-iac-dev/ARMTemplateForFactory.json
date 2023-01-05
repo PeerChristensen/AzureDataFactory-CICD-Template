@@ -6,58 +6,10 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-iac-dev"
-		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
-		},
-		"Peer  Christensen_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Peer  Christensen'"
-		},
-		"Peer  Christensen_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "\\\\PC10034\\Users\\peer\\Desktop"
-		},
-		"Peer  Christensen_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "peer@seges.dk"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
-	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Peer  Christensen')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('Peer  Christensen_properties_typeProperties_host')]",
-					"userId": "[parameters('Peer  Christensen_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('Peer  Christensen_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		}
-	]
+	"resources": []
 }
