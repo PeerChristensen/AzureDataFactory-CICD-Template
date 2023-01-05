@@ -28,5 +28,5 @@ jobs:
       with:
         resourceGroupName: adf-iac
         dataFactoryName: adf-iac-dev
-        armTemplateFile: adf-iac-dev\ARMTemplateForFactory.json
-        armTemplateParametersFile: adf-iac-dev\ARMTemplateParametersForFactory.json
+        armTemplateFile: adf-iac-dev/ARMTemplateForFactory.json
+        armTemplateParametersFile: adf-iac-dev/ARMTemplateParametersForFactory.json
