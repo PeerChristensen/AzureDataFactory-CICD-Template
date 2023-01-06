@@ -3,7 +3,7 @@
 	"contentVersion": "1.0.0.0",
 	"parameters": {
 		"factoryName": {
-			"value": "adf-iac-prod"
+			"value": "adf-iac-dev"
 		}
 	}
 }
