@@ -27,7 +27,7 @@ jobs:
     - name: Deploy resources
       uses: Azure/data-factory-deploy-action@v1.2.0
       with:
-        resourceGroupName: adf-iac
+        resourceGroupName: adf-iac-prod
         dataFactoryName: adf-iac-prod
         armTemplateFile: adf-iac-dev/ARMTemplateForFactory.json
         armTemplateParametersFile: adf-iac-dev/ARMTemplateParametersForFactory.json
