@@ -40,7 +40,7 @@ env:
 ```
 az login
 ```
-- create a service principal and copy the JSON-formatted output string.
+- create a Service Principal and copy the JSON-formatted output string. Make sure to substitute {subscription-id} and {resource-group} with your own values.
 ```
 az ad sp create-for-rbac --name "myApp" --role contributor \
                                 --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} \
