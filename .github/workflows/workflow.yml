@@ -11,8 +11,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'adf-iac-dev/'
   workflow_dispatch:
 
 permissions:
