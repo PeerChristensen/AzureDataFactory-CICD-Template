@@ -1,5 +1,7 @@
 name: deploy-adf
 
+concurrency: adf
+
 on:
   push:
     branches:
