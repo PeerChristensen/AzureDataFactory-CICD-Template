@@ -12,10 +12,10 @@ Importantly, only the Data Factory used for development should be connected to a
 
 ## Prerequisites
 
-- Access to the Azure Portal with permission to create resources.
+- Access to the Azure Portal with permission to create resources
 - A GitHub account
 - A Self-Hosted Integration Runtime installed to copy local data (if needed)
-- Azure CLI installed (optional, if using a local command prompt to interact with Azure).
+- Azure CLI and Git Bash installed (optional, if using a local command prompt to interact with Azure)
 
 ## Instructions
 
@@ -25,15 +25,28 @@ Set the below environment variables to match your Azure resources. Note that `AR
 
 ```
 env:
-    RESOURCEGROUP_NAME: adf-iac-prod
-    DATAFACTORY_NAME: adf-iac-prod
-    ARMTEMPLATEFOLDER_NAME: adf-iac-dev
+    RESOURCEGROUP_NAME: your-production-resourcegroup-name
+    DATAFACTORY_NAME: your-production-datafactory-name
+    ARMTEMPLATEFOLDER_NAME: your-folder-with-arm-templates
 ```
 
 2. Allow GitHub to access and change your production environment
 
-Using the Azure
+- using the Azure Azure CLI, open a Git Bash prompt.
+- login to Azure:
 
+```
+az login
+```
+- create a service principal and copy the JSON-formatted output string.
+```
+az ad sp create-for-rbac --name "myApp" --role contributor \
+                                --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} \
+                                --sdk-auth
+```
+- In your clone of this repo, go to Settings > Secrets > Actions and click 'New repository secret'
+- In the Name field, type the following: `AZURE_CREDENTIALS`
+- In the Secret field, paste the JSON string copied previously.
 
 
 ## Useful Links
