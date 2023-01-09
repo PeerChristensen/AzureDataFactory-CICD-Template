@@ -37,6 +37,6 @@ Using the Azure
 
 
 ## Useful Links
-- [Installing Azure CLI]('https://learn.microsoft.com/en-us/cli/azure/install-azure-cli')
+- [Installing Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - [Create and configure a self-hosted integration runtime]('https://learn.microsoft.com/en-us/azure/data-factory/create-self-hosted-integration-runtime?tabs=data-factory')
 - [Create a shared self-hosted integration runtime in Azure Data Factory]('https://learn.microsoft.com/en-us/azure/data-factory/create-shared-self-hosted-integration-runtime-powershell?source=recommendations#create-a-shared-self-hosted-integration-runtime-in-azure-data-factory-1')
