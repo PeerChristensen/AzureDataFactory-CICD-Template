@@ -1,6 +1,6 @@
 name: deploy-adf
 
-concurrency: adf
+concurrency: adf-deploy-workflow
 
 on:
   push:
@@ -31,7 +31,6 @@ jobs:
     - name: Deploy resources
       uses: Azure/data-factory-deploy-action@v1.2.0
       with:
-        deploymentName: ${{ github.run_number }}
         resourceGroupName: adf-iac-prod
         dataFactoryName: adf-iac-prod
         armTemplateFile: adf-iac-dev/ARMTemplateForFactory.json
