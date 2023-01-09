@@ -2,6 +2,11 @@ name: deploy-adf
 
 concurrency: adf-deploy-workflow
 
+env:
+    RESOURCEGROUP_NAME: adf-iac-prod
+    DATAFACTORY_NAME: adf-iac-prod
+    ARMTEMPLATEFOLDER_NAME: adf-iac-dev
+
 on:
   push:
     branches:
@@ -31,7 +36,7 @@ jobs:
     - name: Deploy resources
       uses: Azure/data-factory-deploy-action@v1.2.0
       with:
-        resourceGroupName: adf-iac-prod
-        dataFactoryName: adf-iac-prod
-        armTemplateFile: adf-iac-dev/ARMTemplateForFactory.json
-        armTemplateParametersFile: adf-iac-dev/ARMTemplateParametersForFactory.json
+        resourceGroupName: ${{ env.RESOURCEGROUP_NAME }}
+        dataFactoryName: ${{ env.DATAFACTORY_NAME }}
+        armTemplateFile: ${{ env.ARMTEMPLATEFOLDER_NAME }}/ARMTemplateForFactory.json
+        armTemplateParametersFile: ${{ env.ARMTEMPLATEFOLDER_NAME }}/ARMTemplateParametersForFactory.json
