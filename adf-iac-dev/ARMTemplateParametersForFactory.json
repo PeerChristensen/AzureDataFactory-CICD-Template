@@ -5,5 +5,9 @@
 		"factoryName": {
 			"value": "adf-iac-dev"
 		}
+		"env": {
+			"type": "string",
+			"value": "dev"
+		}
 	}
 }
