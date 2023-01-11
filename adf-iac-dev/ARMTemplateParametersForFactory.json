@@ -5,8 +5,5 @@
 		"factoryName": {
 			"value": "adf-iac-dev"
 		}
-		"env": {
-			"value": "dev"
-		}
 	}
 }
