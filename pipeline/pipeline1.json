@@ -1,18 +1,6 @@
 {
 	"name": "pipeline1",
 	"properties": {
-		"activities": [
-			{
-				"name": "Append_variable1",
-				"type": "AppendVariable",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "test",
-					"value": "test"
-				}
-			}
-		],
 		"variables": {
 			"test": {
 				"type": "Array"
