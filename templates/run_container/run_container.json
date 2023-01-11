@@ -1,0 +1,217 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Run container')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get-ACR-Login-Server",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@{concat('https://sgsdemokeyvault', pipeline().parameters.env, '.vault.azure.net/secrets/ACR-LOGIN-SERVER/?api-version=7.0')}",
+								"type": "Expression"
+							},
+							"method": "GET",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://vault.azure.net"
+							}
+						}
+					},
+					{
+						"name": "Get-ACR-Username",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@{concat('https://sgsdemokeyvault', pipeline().parameters.env, '.vault.azure.net/secrets/ACR-USERNAME/?api-version=7.0')}",
+								"type": "Expression"
+							},
+							"method": "GET",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://vault.azure.net"
+							}
+						}
+					},
+					{
+						"name": "Get-ACR-Password",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@{concat('https://sgsdemokeyvault', pipeline().parameters.env, '.vault.azure.net/secrets/ACR-PASSWORD/?api-version=7.0')}",
+								"type": "Expression"
+							},
+							"method": "GET",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://vault.azure.net"
+							}
+						}
+					},
+					{
+						"name": "Get-ACI-Proxy-Url",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@{concat('https://sgsdemokeyvault', pipeline().parameters.env, '.vault.azure.net/secrets/ACI-PROXY-URL/?api-version=7.0')}",
+								"type": "Expression"
+							},
+							"method": "GET",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://vault.azure.net"
+							}
+						}
+					},
+					{
+						"name": "Get-ACI-Proxy-Key",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@{concat('https://sgsdemokeyvault', pipeline().parameters.env, '.vault.azure.net/secrets/ACI-PROXY-KEY/?api-version=7.0')}",
+								"type": "Expression"
+							},
+							"method": "GET",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://vault.azure.net"
+							}
+						}
+					},
+					{
+						"name": "Run-Container-Group",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Get-ACI-Proxy-Url",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Get-ACI-Proxy-Key",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Get-ACR-Password",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Get-ACR-Username",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Get-ACR-Login-Server",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@{concat(activity('Get-ACI-Proxy-Url').output.value, '/api/trigger?polling=true')}",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {
+								"x-functions-key": {
+									"value": "@{activity('Get-ACI-Proxy-Key').output.value}",
+									"type": "Expression"
+								}
+							},
+							"body": {
+								"value": "type: Microsoft.ContainerInstance/containerGroups\napiVersion: 2018-10-01\nlocation: westeurope\nname: irisdemocontainer\ntags: null\nproperties:\n  containers:\n  - name: instance1\n    properties:\n      image: @{concat(activity('Get-ACR-Login-Server').output.value, '/irisdemo')}\n      resources:\n        requests:\n          cpu: 1\n          memoryInGB: 1.5\n  osType: Linux\n  restartPolicy: Never\n  imageRegistryCredentials:\n  - server: @{activity('Get-ACR-Login-Server').output.value}\n    username: @{activity('Get-ACR-Username').output.value}\n    password: @{activity('Get-ACR-Password').output.value}",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"parameters": {
+					"env": {
+						"type": "string",
+						"defaultValue": "dev"
+					}
+				},
+				"folder": {
+					"name": "irisdemo"
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-12-17T12:50:56Z"
+			},
+			"dependsOn": []
+		}
+	]
+}
