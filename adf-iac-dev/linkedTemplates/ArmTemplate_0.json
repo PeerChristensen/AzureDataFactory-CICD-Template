@@ -19,13 +19,12 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Append_variable1",
-						"type": "AppendVariable",
+						"name": "Wait1",
+						"type": "Wait",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "test",
-							"value": "test"
+							"waitTimeInSeconds": 1
 						}
 					}
 				],
@@ -64,6 +63,20 @@
 				},
 				"annotations": []
 			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/aci_trigger')]",
+			"type": "Microsoft.DataFactory/factories/templates",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/run_container')]",
+			"type": "Microsoft.DataFactory/factories/templates",
+			"apiVersion": "2018-06-01",
+			"properties": {},
 			"dependsOn": []
 		},
 		{
