@@ -16,7 +16,7 @@
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Trigger a container instance and wait for its response\nAuthor:  JML",
+				"description": "",
 				"activities": [
 					{
 						"name": "Start ACI",
@@ -171,18 +171,18 @@
 					},
 					"ResourceGroupName": {
 						"type": "String",
-						"defaultValue": "KapaAIJMLDataservice"
+						"defaultValue": ""
 					},
 					"FailJob": {
 						"type": "String"
 					},
 					"Subscription": {
 						"type": "String",
-						"defaultValue": "1793906e-afa6-404d-b148-67e745795b97"
+						"defaultValue": ""
 					}
 				},
 				"folder": {
-					"name": "TSMM"
+					"name": "ACI"
 				},
 				"annotations": [],
 				"lastPublishTime": "2021-09-16T15:03:10Z"
