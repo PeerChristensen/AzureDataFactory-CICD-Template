@@ -1,4 +1,4 @@
-name: deploy-adf
+name: Deploy Data Factory
 
 concurrency: adf-deploy-workflow
 
