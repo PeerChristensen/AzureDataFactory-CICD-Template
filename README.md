@@ -1,5 +1,7 @@
 # Continuous Integration and Deployment with Azure Data Factory
 
+[![deploy-adf](https://github.com/PeerChristensen/AzureDataFactory-CICD-Template/actions/workflows/workflow.yml/badge.svg)](https://github.com/PeerChristensen/AzureDataFactory-CICD-Template/actions/workflows/workflow.yml)
+
 ## Description
 
 This repo functions as a template and contains code for deploying a Data Factory along with pipelines, triggers etc. to a different environment, e.g. a production environment. Commits to the main branch trigger a deployment to the production environment, but only if the ARM-template for the Data Factory contains changes. The workflow may also be triggered manually.
