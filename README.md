@@ -38,7 +38,7 @@ env:
 
 2. Allow GitHub to access and change your production environment
 
-- using the Azure Azure CLI, open a Git Bash prompt.
+- using the Azure CLI, open a Git Bash prompt.
 - login to Azure:
 
 ```
