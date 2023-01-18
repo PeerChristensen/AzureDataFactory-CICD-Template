@@ -56,6 +56,13 @@ az ad sp create-for-rbac --name "myApp" --role contributor \
 - In the Name field, type the following: `AZURE_CREDENTIALS`
 - In the Secret field, paste the JSON string copied previously and save.
 
+4. Set up your Git repo to track your Data Factory
+
+- In the Azure portal, find the 'Set up code repository' button, select GitHub and find your repository. 
+- Select 'main' as both Collaboration and Publish branch
+
+Your Git repository is now tracking changes in your ADF's main branch. 
+
 ## Troubleshooting
 **If deployments fail due to Authorization errors**
 
