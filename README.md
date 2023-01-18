@@ -25,7 +25,9 @@ Importantly, only the Data Factory used for development should be connected to a
 
 ## Instructions
 
-1. Modify workflow.yml
+1. Create a new repo from this template.
+
+2. Modify workflow.yml
 
 Set the below environment variables to match your Azure resources. Note that `ARMTEMPLATEFOLDER_NAME` is the same as the name of your development Data Factory.
 
@@ -36,7 +38,7 @@ env:
     ARMTEMPLATEFOLDER_NAME: your-folder-with-arm-templates
 ```
 
-2. Allow GitHub to access and change your production environment
+3. Allow GitHub to access and change your production environment
 
 - using the Azure CLI, open a Git Bash prompt.
 - login to Azure:
