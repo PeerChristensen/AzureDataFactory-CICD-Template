@@ -1,9 +1,0 @@
-{
-	"name": "shirtest-df",
-	"location": "westeurope",
-	"identity": {
-		"type": "SystemAssigned",
-		"principalId": "2ba19083-28e0-41c9-8822-7b9dbda47c73",
-		"tenantId": "52c45313-3bb1-43ef-8124-8c8afc9e779c"
-	}
-}

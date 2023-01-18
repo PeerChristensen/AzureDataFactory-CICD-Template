@@ -1,6 +1,0 @@
-{
-	"name": "integrationRuntimeMac",
-	"properties": {
-		"type": "SelfHosted"
-	}
-}
