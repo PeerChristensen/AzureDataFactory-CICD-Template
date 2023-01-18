@@ -54,7 +54,7 @@ az ad sp create-for-rbac --name "myApp" --role contributor \
 - In the Name field, type the following: `AZURE_CREDENTIALS`
 - In the Secret field, paste the JSON string copied previously and save.
 
-## Troubleshhoting
+## Troubleshooting
 **If deployments fail due to Authorization errors**
 
 In this case, you may need to create a custom role (note the lacking permissions in the error message). In the Azure portal you can create a custom role within your resource group by adding the relevant data factory permissions to the contributor role and supply a meaningful name for the new role definition. After doing so, you will need to update the service principal with the new role assignment and copy-paste the JSON output to update the GitHub secret (`AZURE_CREDENTIALS`)
