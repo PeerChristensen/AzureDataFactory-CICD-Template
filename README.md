@@ -56,6 +56,12 @@ az ad sp create-for-rbac --name "myApp" --role contributor \
 - In the Name field, type the following: `AZURE_CREDENTIALS`
 - In the Secret field, paste the JSON string copied previously and save.
 
+*Note: if you get an error saying "No connection adapters were found...", run the command below and try again.*
+
+```
+export MSYS_NO_PATHCONV=1
+```
+
 4. Set up your Git repo to track your Data Factory
 
 - In the Azure portal, find the 'Set up code repository' button, select GitHub and find your repository. 
