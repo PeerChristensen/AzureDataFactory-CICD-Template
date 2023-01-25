@@ -64,7 +64,7 @@ export MSYS_NO_PATHCONV=1
 
 4. Set up your Git repo to track your Data Factory
 
-- In the Azure portal, find the 'Set up code repository' button, select GitHub and find your repository. 
+- In the Azure portal, go to your dev/test ADF and find the 'Set up code repository' button, select GitHub and find your repository. 
 - Select 'main' as both Collaboration and Publish branch
 
 Your Git repository is now tracking changes in your ADF's main branch. 
