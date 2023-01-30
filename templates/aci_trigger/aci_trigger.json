@@ -1,0 +1,190 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/aci_trigger')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "",
+				"activities": [
+					{
+						"name": "Start ACI",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "@concat('https://management.azure.com/subscriptions/',variables('Subscription'),'/resourceGroups/',variables('ResourceGroupName'),'/providers/Microsoft.ContainerInstance/containerGroups/',pipeline().parameters.ContainerGroupName,'/start?api-version=2019-12-01')",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"body": "{dummy}",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://management.azure.com"
+							}
+						}
+					},
+					{
+						"name": "Until job is completed",
+						"type": "Until",
+						"dependsOn": [
+							{
+								"activity": "Start ACI",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@or(equals(variables('ContainerState'),'Completed'),equals(variables('ContainerState'),'Error'))",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Wait for 30 sec",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 30
+									}
+								},
+								{
+									"name": "Get ContainerState",
+									"type": "WebActivity",
+									"dependsOn": [
+										{
+											"activity": "Wait for 30 sec",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"url": {
+											"value": "@concat('https://management.azure.com/subscriptions/',variables('Subscription'),'/resourceGroups/',variables('ResourceGroupName'),'/providers/Microsoft.ContainerInstance/containerGroups/',pipeline().parameters.ContainerGroupName,'?api-version=2019-12-01')",
+											"type": "Expression"
+										},
+										"method": "GET",
+										"authentication": {
+											"type": "MSI",
+											"resource": "https://management.azure.com"
+										}
+									}
+								},
+								{
+									"name": "Set ContainerState",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Get ContainerState",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "ContainerState",
+										"value": {
+											"value": "@activity('Get ContainerState').output.properties.containers[0]. properties.instanceView.currentState.detailStatus",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "If container job falls",
+									"type": "IfCondition",
+									"dependsOn": [
+										{
+											"activity": "Set ContainerState",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"expression": {
+											"value": "@or(equals(variables('ContainerState'),'Error'), and(equals(activity('Get ContainerState').output.properties.containers[0].properties.instanceView.currentState.state, 'Terminated'), not(equals(variables('ContainerState'),'Completed'))))\n\n",
+											"type": "Expression"
+										},
+										"ifTrueActivities": [
+											{
+												"name": "Set FailJob",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "FailJob",
+													"value": {
+														"value": "@div(1,0)",
+														"type": "Expression"
+													}
+												}
+											}
+										]
+									}
+								}
+							],
+							"timeout": "7.00:00:00"
+						}
+					}
+				],
+				"parameters": {
+					"ContainerGroupName": {
+						"type": "string"
+					}
+				},
+				"variables": {
+					"ContainerState": {
+						"type": "String"
+					},
+					"ResourceGroupName": {
+						"type": "String",
+						"defaultValue": ""
+					},
+					"FailJob": {
+						"type": "String"
+					},
+					"Subscription": {
+						"type": "String",
+						"defaultValue": ""
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-09-16T15:03:10Z"
+			},
+			"dependsOn": []
+		}
+	]
+}
