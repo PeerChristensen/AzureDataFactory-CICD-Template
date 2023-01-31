@@ -35,3 +35,25 @@ jobs:
         dataFactoryName: ${{ env.DATAFACTORY_NAME }}
         armTemplateFile: ${{ env.ARMTEMPLATEFOLDER_NAME }}/ARMTemplateForFactory.json
         armTemplateParametersFile: ${{ env.ARMTEMPLATEFOLDER_NAME }}/ARMTemplateParametersForFactory.json
+
+  role-assign:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login via Az module
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - run: |
+          export spID=$(az datafactory show \
+            --name ${{ env.DATAFACTORY_NAME }} \
+            --resource-group ${{ env.RESOURCEGROUP_NAME }} \
+            --query identity.principalId --out tsv)
+            echo "::set-output name=sp_id::$spID"
+        name: 'Get Service Principal (obj id)'
+        id: get_sp_step
+      - run: |
+          az role assignment create --assignee ${{ steps.get_sp_step.outputs.sp_id }} \
+            --role Contributor \
+            --resource-group ${{ env.RESOURCEGROUP_NAME }}
