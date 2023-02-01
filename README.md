@@ -72,13 +72,6 @@ Your Git repository is now tracking changes in your ADF's main branch.
 ## Troubleshooting
 **If deployments fail due to Authorization errors**
 
-In this case, you may need to create a custom role (note the lacking permissions in the error message). In the Azure portal you can create a custom role within your resource group by adding the relevant data factory permissions to the contributor role and supply a meaningful name for the new role definition. After doing so, you will need to update the service principal with the new role assignment and copy-paste the JSON output to update the GitHub secret (`AZURE_CREDENTIALS`)
-
-## Useful Links
-- [Installing Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-- [Create and configure a self-hosted integration runtime](https://learn.microsoft.com/en-us/azure/data-factory/create-self-hosted-integration-runtime?tabs=data-factory)
-- [Create a shared self-hosted integration runtime in Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/create-shared-self-hosted-integration-runtime-powershell?source=recommendations#create-a-shared-self-hosted-integration-runtime-in-azure-data-factory-1)
-
 **If deployment fails when enabling ADF to start ACIs**
 
 If you get the error: *'The client ... with object id ... does not have authorization to perform action 'Microsoft.Authorization/roleAssignments/write'*, your resources will still have been successfully deployed, but you wil need to grant your ADF permission to start ACIs by running the following command yourself (or use the portal):
@@ -88,4 +81,11 @@ az role assignment create --assignee <TheServicepPrincipalObjectID> \
     --role Contributor \
     --resource-group rcloud-test-rg
 ```
+
+In this case, you may need to create a custom role (note the lacking permissions in the error message). In the Azure portal you can create a custom role within your resource group by adding the relevant data factory permissions to the contributor role and supply a meaningful name for the new role definition. After doing so, you will need to update the service principal with the new role assignment and copy-paste the JSON output to update the GitHub secret (`AZURE_CREDENTIALS`)
+
+## Useful Links
+- [Installing Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+- [Create and configure a self-hosted integration runtime](https://learn.microsoft.com/en-us/azure/data-factory/create-self-hosted-integration-runtime?tabs=data-factory)
+- [Create a shared self-hosted integration runtime in Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/create-shared-self-hosted-integration-runtime-powershell?source=recommendations#create-a-shared-self-hosted-integration-runtime-in-azure-data-factory-1)
 
