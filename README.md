@@ -70,7 +70,10 @@ export MSYS_NO_PATHCONV=1
 Your Git repository is now tracking changes in your ADF's main branch. 
 
 ## Troubleshooting
-**If deployments fail due to Authorization errors**
+
+**If deployments fail due to Autorization errors**
+
+In this case, you may need to create a custom role (note the lacking permissions in the error message). In the Azure portal you can create a custom role within your resource group by adding the relevant data factory permissions to the contributor role and supply a meaningful name for the new role definition. After doing so, you will need to update the service principal with the new role assignment and copy-paste the JSON output to update the GitHub secret (`AZURE_CREDENTIALS`)
 
 **If deployment fails when enabling ADF to start ACIs**
 
