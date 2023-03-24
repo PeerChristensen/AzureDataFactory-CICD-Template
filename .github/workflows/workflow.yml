@@ -50,7 +50,7 @@ jobs:
             --name ${{ env.DATAFACTORY_NAME }} \
             --resource-group ${{ env.RESOURCEGROUP_NAME }} \
             --query identity.principalId --out tsv)
-            echo "::set-output name=sp_id::$spID"
+            echo "sp_id=$spID" >> $GITHUB_OUTPUT
       name: 'Get Service Principal (obj id)'
       id: get_sp_step
     - run: |
